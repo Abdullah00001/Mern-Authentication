@@ -3,6 +3,7 @@ import { UserModel } from '../models/user.models.js';
 
 export const signupController = async (req, res) => {
   try {
+    console.log(req.body);
     const { userName, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({ userName, password: hashPassword });

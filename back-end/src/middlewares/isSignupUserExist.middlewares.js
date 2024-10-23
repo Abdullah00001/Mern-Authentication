@@ -2,7 +2,8 @@ import { UserModel } from '../models/user.models.js';
 
 export const isSignupUserExist = async (req, res, next) => {
   try {
-    const {userName} = req.body;
+    console.log(req.body);
+    const { userName } = req.body;
     const isUser = await UserModel.findOne({ userName });
     if (!isUser) {
       return next();

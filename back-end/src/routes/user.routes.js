@@ -18,6 +18,7 @@ import { signupController } from '../controllers/signup.controllers.js';
 import { signinController } from '../controllers/signin.controllers.js';
 import { logoutController } from '../controllers/logout.controllers.js';
 import { refreshTokenController } from '../controllers/refreshToken.controllers.js';
+import { checkAuthController } from '../controllers/checkAuth.controllers.js';
 
 router.post('/signup', isSignupUserExist, signupController);
 router.post('/signin', isLoginUserExist, signinController);
@@ -29,3 +30,4 @@ router.post('/signin', isLoginUserExist, signinController);
 router.post('/logout', checkAuth, logoutController);
 router.post('refreshtokens/', refreshTokenController);
 export default router;
+router.get('/checkauth', checkAuth, checkAuthController);
