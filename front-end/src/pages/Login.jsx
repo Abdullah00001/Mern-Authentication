@@ -1,4 +1,30 @@
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
+  const navigate = useNavigate();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const userName = e.target.userName.value;
+    const password = e.target.userPassword.value;
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/v1/user/signin',
+      data: {
+        userName,
+        password,
+      },
+      withCredentials: true,
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <section>
       <div className='flex justify-center items-center h-[80vh]'>
@@ -7,7 +33,7 @@ const Login = () => {
           <p className='text-lg font-medium mt-2'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </p>
-          <form className='mt-5'>
+          <form className='mt-5' onSubmit={handleLogin}>
             <div className='flex flex-col gap-3'>
               <label htmlFor='userName' className='text-xl font-semibold'>
                 User Name<span className='text-red-600'>*</span>

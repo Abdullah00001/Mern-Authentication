@@ -1,13 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import UnauthenticateLayouts from '../layouts/Unauthenticate.Layouts';
-import LandingPage from '../pages/LandingPage';
+import Layout from '../layouts/Layout';
+import Main from '../layouts/Main';
+import CreatePost from '../pages/CreatePost';
+import { ProtectedRoute } from './ProtectedRoute';
+import { UnauthenticatedProtectedRoute } from './UnauthenticatedProtectedRoute';
 
 export const Routes = createBrowserRouter([
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <UnauthenticatedProtectedRoute>
+        <Login />
+      </UnauthenticatedProtectedRoute>
+    ),
   },
   {
     path: '/signup',
@@ -15,12 +22,20 @@ export const Routes = createBrowserRouter([
   },
   {
     path: '/',
-    element: <UnauthenticateLayouts></UnauthenticateLayouts>,
-    children:[
+    element: <Layout></Layout>,
+    children: [
       {
-        path:"/",
-        element:<LandingPage></LandingPage>
-      }
-    ]
+        path: '/',
+        element: <Main></Main>,
+      },
+      {
+        path: '/create-post',
+        element: (
+          <ProtectedRoute>
+            <CreatePost></CreatePost>
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
 ]);
